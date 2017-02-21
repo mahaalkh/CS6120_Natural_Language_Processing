@@ -1,0 +1,779 @@
+# Comments start at a hash (#) character and go to the end of the line.
+# Ignore lines that only have whitespace.
+
+# All other lines should have a non-negative weight, a left-hand-side
+# nonterminal symbol, and one or more right-hand-side terminals and
+# nonterminals.
+
+# The start symbol is START.
+# These two rules are required; choose their weights carefully!
+# If S1 is chosen, the generator will use your human-written grammar.
+# If S2 is chosen, the generator will use a tag bigram model.
+
+# We start the weight for S2 at 0 so that you can play around with
+# generating sentences from your grammar without being confused by the
+# bigram model.
+
+99	START	S1
+10	START	S2
+
+## Beginning of human-written grammar.
+
+# Edit the rules and weights in this part of the grammar.
+# This is a very, very, very simple grammar to get you started.
+
+# ---------------------- grammar 4 
+# I am modeling sentences with subordinating conjuctions because subordinating conjuctions with 
+# different meaning have different uses and the grammatical structure changes. Also, the sentence  # punctuation changes based on the location of the subordinating conjuctions
+
+# Examples I am modeling are: 
+# - Arthur was riding while Gwen was cooking.   
+# - while Arthur was riding, Gwen was cooking. 
+# ------------------------------ 
+
+1	S1	NP VP . 
+
+1	VP	VerbT NP
+
+20	NP	Det Nbar
+1	NP	Proper
+
+20	Nbar	Noun
+20	Nbar	Nbar PP
+
+1	PP	Prep NP
+
+# do coconuts speak
+5 S1 NC V Q
+
+15 NC VerbDo Noun
+
+18 NC VerbDo3rd Proper
+
+# who does Arther suggest she carry ? 
+10 S1 P1 P2 Q
+
+1 P1 WhPro1 VerbDo3rd Proper
+1 P1 WhPro2 VerbDo3rd Proper
+
+1 P2 V3rdPrsPl PS Vbase 
+
+1 PS PronPerSSing
+
+1 PS PronPerSP
+
+# do not speak ! 
+5 S1 CN V E
+
+1 CN VerbDo NOT 
+
+# are they suggesting Arthur ride to Camelot ?
+0 S1 A1 A2 Q
+
+1 A1 ARE PronPerSP VprsP 
+
+1 A2 Proper Vbase TO PropPl
+
+# the Holy Grail was covered by a yellow fruit .
+5 S1 DP PP2 . 
+
+1 DP Det PropTh BEPastSing VpstP
+
+1 PP2 Prep Det Adj Noun
+
+
+# Arthur will have been riding for eight nights .
+
+5 S1 B1 B2 . 
+
+1 B1 Proper ModalB HAVE VHpstP VprsP 
+
+1 B2 Prep R
+
+5 R Num NounP
+
+1 R NumSing Noun
+
+#  Arthur and Guinevere migrate frequently .
+5 S1 M1 M2 . 
+
+1 M1 Proper ConjCT Proper
+
+2 M2 Vbase  Adv
+
+#  he knows what they are covering with that story .
+
+5 S1 C1 C2 C3 . 
+
+1 C1 PronPerSSing  V3rdSing 
+
+1 C1 PronPerSP V3rdPrsPl
+
+1 C2 WhDet PronPerSP 
+
+1 C3 ARE VprsP Prep Det Noun
+
+# the king drank to the castle that was his home .
+
+5 S1  H1 H2 H3 . 
+
+1 H1 Det Noun Vpast
+1 H2 TO Det Noun 
+1 H3 Det BEPastSing PronPosPer Noun
+
+
+# Arthur was riding while Gwen was cooking.
+
+30 S1 CL1 C CL1 . 
+1 CL1 Proper BEPastSing VprsP  
+1 C ConjS2
+
+# while Arthur was riding, Gwen was cooking. 
+30 S1 C CL1 , CL1 . 
+
+1 V Vbase
+
+4 Q Qst
+
+4 E Exl
+
+## End of human-written grammar
+
+## Vocabulary section
+# This is a hand-generated set of preterminal rules.
+# It specifies a simple tag set which will be handled by the S2
+# grammar and which can (though doesn't necessarily need to be)
+# handled by the S1 grammar.
+
+# The weights and left-hand-side tags given here may be changed, but
+# no new vocabulary items are to be added. That keeps you from
+# stumping other parsers simply by adding new words.
+
+# Miscellaneous items that don't fit into any of our simple tags are
+# given to Misc.  You will want to develop your own tags for these!
+
+
+# Singular and mass nouns.  Notice that only the
+# ones that start with consonants get our Noun tag.
+1	Noun	castle
+1	Noun	king
+1	Noun	defeater
+1	Noun	sovereign
+1	Noun	servant
+1	Noun	corner
+1	Noun	land
+1	Noun	quest
+1	Noun	chalice
+1	Noun	master
+1	Noun	horse
+1	Noun	fruit
+1	Noun	swallow
+1	Noun	sun
+1	Noun	winter
+1	Noun	coconut
+1	Noun	pound
+1	Noun	husk
+1	Noun	home
+1	Noun	weight
+1	Noun	story
+
+# Determiners.
+1	Det	a
+1	Det	another
+1	Det	any
+1	Det	each
+1	Det	every
+1	Det	no
+1	Det	that
+1	Det	the
+1	Det	this
+
+# Prepositions.
+1	Prep	above
+1	Prep	across
+1	Prep	at
+1	Prep	below
+1	Prep	by 
+
+1	Prep	for
+1	Prep	from
+1	Prep	into
+1	Prep	near
+1	Prep	of
+1	Prep	on
+1	Prep	over
+1	Prep	through
+1	Prep	with
+
+# Proper nouns.  Note that our Proper tag is just for people.
+1	Proper	Arthur
+1	Proper	Guinevere
+1	Proper	Sir Lancelot
+1	Proper	Sir Bedevere
+1	Proper	Zoot
+1	Proper	Dingo
+1	Proper	Patsy
+1	Proper	Uther Pendragon
+
+# Verbs (third person singular present).
+# Note that only transitive verbs get our VerbT tag,
+# and some of those could also function as intransitives!
+1	VerbT	has
+1	VerbT	covers
+1	VerbT	is
+1	VerbT	drinks
+1	VerbT	carries
+1	VerbT	rides
+
+# End-of-sentence.
+1	Exl	!
+1	Stp	.
+1	Qst	?
+
+# Pauses.
+1	Comm	,
+1	Dot		...
+1	Dash	--
+1	Semi	;
+1	Col 	:
+
+# Coordinating conjunctions.
+1	ConjCT	and
+1	ConjC	but
+1	ConjC	or
+1	ConjC	either
+1	ConjC	nor
+1	ConjC	neither
+1	ConjC	so
+
+# Numbers.
+1	Num		eight
+1	Num		five
+1	NumSing	one
+1	Num		5.5
+1	Num		sixty
+1	Num		5,000
+
+# Expletive.
+1	Explt	there
+
+# Subordinating conjunctions.
+1	ConjS11	that
+1	ConjS12	so
+1	ConjS2	while
+1	ConjS3	because
+1	ConjS0	if
+
+# Modals.
+1	Modal0	can
+1	Modal0	could
+1	Modal0	may
+1	Modal0	might
+1	Modal0	must
+1	Modal0	ought
+1	Modal0	shall
+1	Modal0	should
+1	ModalB	will
+1	Modal0	would
+
+
+# Adjectives.
+1	Adj		bloody
+1	Adj		weary
+1	Adj		unable
+1	Adj		trusty
+1	Adj		further
+1	Adj		sacred
+1	Adj		tropical
+1	Adj		indigenous
+1	Adj		temperate
+1	Adj		hot
+1	Adj		lucky
+1	Adj		simple
+1	Adj		tiny
+1	Adj		hard	
+1	Adj		sensational
+1	Adj		comparable
+1	Adj		angolian
+1	Adj		yellow
+1	Adj		plodding
+
+# Comparative adjectives.
+1	AdjC	bloodier
+1	AdjC	wearier
+1	AdjC	trustier
+1	AdjC	hotter
+1	AdjC	simpler
+1	AdjC	tinier
+1	AdjC	harder
+
+# Superlative adjectives.
+1	AdjS	bloodiest
+1	AdjS	weariest
+1	AdjS	trustiest
+1	AdjS	hottest
+1	AdjS	simplest
+1	AdjS	tiniest
+1	AdjS	hardest
+
+# Plural nouns.
+1	NounP	coconuts
+1	NounP	halves
+1	NounP	snows
+1	NounP	mountains
+1	NounP	areas
+1	NounP	strangers
+1	NounP	inches
+1	NounP	snakes
+1	NounP	ants
+3	NounP	nights
+
+# More proper nouns, not people.
+
+1	PropPl	Camelot
+1	PropPl	England
+
+1	PropTh Holy Grail
+1	PropTh	Round Table
+
+# Plural proper nouns.
+1	ProperD	Britons
+1	ProperD	Saxons
+
+# Personal pronouns.
+1	PronPerSSing	he
+1	PronPerO		her
+1	PronPerO		him
+1	PronPerSSing	it
+1	PronPerSSing	one
+1	PronPerSSing	she
+1	PronPerOP		them
+1	PronPerSP 		they
+
+
+# Possessive personal pronouns
+1	PronPosPer	her
+1	PronPosPer	his
+1	PronPosPer	its
+1	PronPosPer	their
+
+# Adverbs.
+1	Adv	again
+1	Adv	already
+1	Adv	currently
+1	Adv	frequently
+1	Adv	precisely
+1	Adv	south
+1	Adv	successfully
+1	Adv	unfortunately
+
+# 'do'/'does'
+1	VerbDo	do
+1	VerbDo3rd	does
+
+# 'to'
+1	TO	to
+
+# 'not'
+1	NOT	not
+
+# Verbs (base form).
+1	Vbase	have
+1	Vbase	speak
+1	Vbase	cover
+1	VbaseB	be
+1	Vbase	ride
+1	Vbase	drink
+1	Vbase	grow
+1	Vbase	carry
+1	Vbase	suggest
+1	Vbase	migrate
+1	Vbase	know
+
+# Verbs (past tense).
+1	HAD			had
+1	Vpast		spoke
+1	Vpast		covered
+1	BEPastSing	was
+1	BEPastP		were
+1	Vpast		rode
+1	Vpast		drank
+1	Vpast		grew
+1	Vpast		carried
+1	Vpast		suggested
+1	Vpast		migrated
+1	Vpast		knew
+
+# Verbs (present participles).
+1	VprsP1	having
+1	VprsP0	speaking
+1	VprsP1	covering
+1	VprsP1	being
+3	VprsP	riding
+1	VprsP	drinking
+1	VprsP	growing
+1	VprsP4	carrying
+1	VprsP3	suggesting
+1	VprsP2	migrating
+1	VprsP3	knowing
+
+# Verbs (past participle).
+1	HADpstP had
+1	VpstP	spoken
+1	VpstP	covered
+1	VHpstP	been
+1	VpstP	ridden
+1	VpstP	drunk
+1	VpstP	grown
+1	VpstP	carried
+1	VpstP	suggested
+1	VpstP	migrated
+1	VpstP	known
+
+# More third person singular verbs.
+1	V3rdSing	speaks
+1	V3rdSing	grows
+1	V3rdSing	goes
+1	V3rdSing	migrates
+1	V3rdSing	suggests
+1	V3rdSing	knows
+
+# Verbs (present, plural, third person).
+1	HAVE 		have
+1	V3rdPrsPl	speak
+1	V3rdPrsPl	cover
+1	ARE			are
+1	V3rdPrsPl	ride
+1	V3rdPrsPl	drink
+1	V3rdPrsPl	grow
+1	V3rdPrsPl	carry
+1	V3rdPrsPl	suggest
+1	V3rdPrsPl	migrate
+1	V3rdPrsPl	know
+
+# Wh-determiners.
+1	WhDet	that
+1	WhDet	what
+1	WhDet	which
+
+# Wh-pronouns.
+1	WhPro1	what
+1	WhPro2	who
+
+# Wh possessive pronoun.
+1	WhPosPro	whose
+
+# Wh-adverbs
+1	WhAdv	how
+1	WhAdv	when
+1	WhAdv	where
+1	WhAdv	why
+
+
+# Possessive marker.
+1	PosMarker	's
+
+
+# ---------------- ----------------- Misc I added the non labeled Misc ---------------------
+
+
+# End-of-sentence.
+1	Misc	!
+1	Misc	.
+1	Misc	?
+
+# Pauses.
+1	Misc	,
+1	Misc	...
+1	Misc	--
+1	Misc	;
+1	Misc	:
+
+# Coordinating conjunctions.
+1	Misc	and
+1	Misc	but
+1	Misc	or
+1	Misc	either
+1	Misc	nor
+1	Misc	neither
+1	Misc	so
+
+# Numbers.
+1	Misc	eight
+1	Misc	five
+1	Misc	one
+1	Misc	5.5
+1	Misc	sixty
+1	Misc	5,000
+
+# Expletive.
+1	Misc	there
+
+# Subordinating conjunctions.
+1	Misc	that
+1	Misc	so
+1	Misc	while
+1	Misc	because
+1	Misc	if
+
+# Modals.
+1	Misc	can
+1	Misc	could
+1	Misc	may
+1	Misc	might
+1	Misc	must
+1	Misc	ought
+1	Misc	shall
+1	Misc	should
+1	Misc	will
+1	Misc	would
+
+
+# Adjectives.
+1	Misc	bloody
+1	Misc	weary
+1	Misc	unable
+1	Misc	trusty
+1	Misc	further
+1	Misc	sacred
+1	Misc	tropical
+1	Misc	indigenous
+1	Misc	temperate
+1	Misc	hot
+1	Misc	lucky
+1	Misc	simple
+1	Misc	tiny
+1	Misc	hard	
+1	Misc	sensational
+1	Misc	comparable
+1	Misc	angolian
+1	Misc	yellow
+1	Misc	plodding
+
+# Comparative adjectives.
+1	Misc	bloodier
+1	Misc	wearier
+1	Misc	trustier
+1	Misc	hotter
+1	Misc	simpler
+1	Misc	tinier
+1	Misc	harder
+
+# Superlative adjectives.
+1	Misc	bloodiest
+1	Misc	weariest
+1	Misc	trustiest
+1	Misc	hottest
+1	Misc	simplest
+1	Misc	tiniest
+1	Misc	hardest
+
+# Plural nouns.
+1	Misc	coconuts
+1	Misc	halves
+1	Misc	snows
+1	Misc	mountains
+1	Misc	areas
+1	Misc	strangers
+1	Misc	inches
+1	Misc	snakes
+1	Misc	ants
+1	Misc	nights
+
+# More proper nouns, not people.
+
+1	Misc	Camelot
+1	Misc	England
+1	Misc	Holy Grail
+1	Misc	Round Table
+
+# Plural proper nouns.
+1	Misc	Britons
+1	Misc	Saxons
+
+# Personal pronouns.
+1	Misc	he
+1	Misc	her
+1	Misc	him
+1	Misc	it
+1	Misc	one
+1	Misc	she
+1	Misc	them
+1	Misc	they
+
+
+# Possessive personal pronouns
+1	Misc	her
+1	Misc	his
+1	Misc	its
+1	Misc	their
+
+# Adverbs.
+1	Misc	again
+1	Misc	already
+1	Misc	currently
+1	Misc	frequently
+1	Misc	precisely
+1	Misc	south
+1	Misc	successfully
+1	Misc	unfortunately
+
+# 'do'/'does'
+1	Misc	do
+1	Misc	does
+
+# 'to'
+1	Misc	to
+
+# 'not'
+1	Misc	not
+
+# Verbs (base form).
+1	Misc	have
+1	Misc	speak
+1	Misc	cover
+1	Misc	be
+1	Misc	ride
+1	Misc	drink
+1	Misc	grow
+1	Misc	carry
+1	Misc	suggest
+1	Misc	migrate
+1	Misc	know
+
+# Verbs (past tense).
+1	Misc	had
+1	Misc	spoke
+1	Misc	covered
+1	Misc	was
+1	Misc	were
+1	Misc	rode
+1	Misc	drank
+1	Misc	grew
+1	Misc	carried
+1	Misc	suggested
+1	Misc	migrated
+1	Misc	knew
+
+# Verbs (present participles).
+1	Misc	having
+1	Misc	speaking
+1	Misc	covering
+1	Misc	being
+1	Misc	riding
+1	Misc	drinking
+1	Misc	growing
+1	Misc	carrying
+1	Misc	suggesting
+1	Misc	migrating
+1	Misc	knowing
+
+# Verbs (past participle).
+1	Misc	had
+1	Misc	spoken
+1	Misc	covered
+1	Misc	been
+1	Misc	ridden
+1	Misc	drunk
+1	Misc	grown
+1	Misc	carried
+1	Misc	suggested
+1	Misc	migrated
+1	Misc	known
+
+# More third person singular verbs.
+1	Misc	speaks
+1	Misc	grows
+1	Misc	goes
+1	Misc	migrates
+1	Misc	suggests
+1	Misc	knows
+
+# Verbs (present, plural, third person).
+1	Misc	have
+1	Misc	speak
+1	Misc	cover
+1	Misc	are
+1	Misc	ride
+1	Misc	drink
+1	Misc	grow
+1	Misc	carry
+1	Misc	suggest
+1	Misc	migrate
+1	Misc	know
+
+# Wh-determiners.
+1	Misc	that
+1	Misc	what
+1	Misc	which
+
+# Wh-pronouns.
+1	Misc	what
+1	Misc	who
+
+# Wh possessive pronoun.
+1	Misc	whose
+
+# Wh-adverbs
+1	Misc	how
+1	Misc	when
+1	Misc	where
+1	Misc	why
+
+
+# Possessive marker.
+1	Misc	's
+
+## S2 tag bigram model
+
+# You may change the weights here or add new rules if you introduce
+# new tags.
+
+1	S2	_Det
+1	S2	_Misc
+1	S2	_Noun
+1	S2	_Prep
+1	S2	_Proper
+1	S2	_VerbT
+1	_Det	Det
+1	_Det	Det _Det
+1	_Det	Det _Misc
+1	_Det	Det _Noun
+1	_Det	Det _Prep
+1	_Det	Det _Proper
+1	_Det	Det _VerbT
+1	_Misc	Misc
+1	_Misc	Misc _Det
+1	_Misc	Misc _Misc
+1	_Misc	Misc _Noun
+1	_Misc	Misc _Prep
+1	_Misc	Misc _Proper
+1	_Misc	Misc _VerbT
+1	_Noun	Noun
+1	_Noun	Noun _Det
+1	_Noun	Noun _Misc
+1	_Noun	Noun _Noun
+1	_Noun	Noun _Prep
+1	_Noun	Noun _Proper
+1	_Noun	Noun _VerbT
+1	_Prep	Prep
+1	_Prep	Prep _Det
+1	_Prep	Prep _Misc
+1	_Prep	Prep _Noun
+1	_Prep	Prep _Prep
+1	_Prep	Prep _Proper
+1	_Prep	Prep _VerbT
+1	_Proper	Proper
+1	_Proper	Proper _Det
+1	_Proper	Proper _Misc
+1	_Proper	Proper _Noun
+1	_Proper	Proper _Prep
+1	_Proper	Proper _Proper
+1	_Proper	Proper _VerbT
+1	_VerbT	VerbT
+1	_VerbT	VerbT _Det
+1	_VerbT	VerbT _Misc
+1	_VerbT	VerbT _Noun
+1	_VerbT	VerbT _Prep
+1	_VerbT	VerbT _Proper
+1	_VerbT	VerbT _VerbT
